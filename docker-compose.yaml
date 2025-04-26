@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  promptflow-serve:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
+      - AZURE_OPENAI_API_VERSION=${AZURE_OPENAI_API_VERSION}
+      - AZURE_OPENAI_DEPLOYMENT=${AZURE_OPENAI_DEPLOYMENT}
+      - BLOB_STORAGE_ACCOUNT_NAME=${BLOB_STORAGE_ACCOUNT_NAME}
+      - BLOB_STORAGE_ACCOUNT_KEY=${BLOB_STORAGE_ACCOUNT_KEY}
+      - CHRONOS_BFF_URL=${CHRONOS_BFF_URL}
+        #- APPLICATIONINSIGHTS_CONNECTION_STRING=${APPLICATIONINSIGHTS_CONNECTION_STRING}
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - edge
+
+networks:
+  edge:
+    driver: bridge

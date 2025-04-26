@@ -1,0 +1,9 @@
+torch
+openai
+PyPDF2
+requests
+promptflow
+openai-whisper
+promptflow-tools
+azure-storage-blob
+azure-cognitiveservices-speech

@@ -1,0 +1,48 @@
+id: template_bet_flow
+name: Bet Flow
+environment:
+  python_requirements_txt: requirements.txt
+inputs:
+  audio_file_name:
+    type: string
+    default: dialog_5.mp3
+  dialogs_container_dir:
+    type: string
+    default: dialogs
+  prompt_list:
+    type: list
+    default:
+    - check_rules
+  prompt_base_dir:
+    type: string
+    default: ./prompts
+outputs:
+  extracted_clausules:
+    type: string
+    reference: ${process_clausules.output}
+nodes:
+- name: load_prompts
+  type: python
+  source:
+    type: code
+    path: ./tools/load_prompts.py
+  inputs:
+    prompt_list: ${inputs.prompt_list}
+    prompt_base_dir: ${inputs.prompt_base_dir}
+- name: load_and_transcribe_audio
+  type: python
+  source:
+    type: code
+    path: tools/load_and_transcribe_audio.py
+  inputs:
+    file_name: ${inputs.audio_file_name}
+    container_name: ${inputs.dialogs_container_dir}
+- name: process_clausules
+  type: python
+  source:
+    type: code
+    path: ./tools/process_clausules.py
+  inputs:
+    prompts: ${load_prompts.output}
+    document_text: ${load_and_transcribe_audio.output}
+  aggregation: false
