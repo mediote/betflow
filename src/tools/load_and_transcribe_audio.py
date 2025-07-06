@@ -2,11 +2,11 @@ import io
 import os
 import tempfile
 import warnings
-import torch
 
+import torch
+import whisper
 from azure.storage.blob import BlobServiceClient
 from promptflow.core import tool
-import whisper
 
 
 class FileNotFoundException(Exception):

@@ -5,10 +5,10 @@ WORKDIR /
 
 COPY ./requirements.txt /src/requirements.txt
 
-# gcc is for build psutil in MacOS
-RUN apt-get update && apt-get install -y runit gcc
+# Install required system packages (added ffmpeg here)
+RUN apt-get update && apt-get install -y runit gcc ffmpeg
 
-# create conda environment
+# Create conda environment and install dependencies
 RUN conda create -n promptflow-serve python=3.9.16 pip=23.0.1 -q -y && \
     conda run -n promptflow-serve \
     pip install -r /src/requirements.txt && \
@@ -23,11 +23,9 @@ COPY ./src /src
 
 EXPOSE 8080
 
-
-# reset runsvdir
+# Reset runsvdir
 RUN rm -rf /var/runit
 COPY ./runit /var/runit
-# grant permission
 RUN chmod -R +x /var/runit
 
 COPY ./start.sh /
