@@ -7,3 +7,4 @@ openai-whisper
 promptflow-tools
 azure-storage-blob
 azure-cognitiveservices-speech
+streamlit

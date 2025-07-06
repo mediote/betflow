@@ -23,7 +23,6 @@ COPY ./src /src
 
 EXPOSE 8080
 
-COPY ./connections /connections
 
 # reset runsvdir
 RUN rm -rf /var/runit
